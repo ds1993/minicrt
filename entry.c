@@ -12,24 +12,24 @@ static void crt_fatal_error(const char* msg)
 void mini_crt_entry(void)
 {
     int ret;
-    
+
     int argc;
     char** argv;
     char* ebp_reg = 0;
     //ebp_reg = %ebp_reg
     asm("movl %%ebp, %0 \n": "=r"(ebp_reg));
-    
+
     argc = *(int*)(ebp_reg + 4);
     argv = (char**)(ebp_reg + 8);
-    
+
     if (!mini_crt_heap_init()) {
         crt_fatal_error("heap initialize failed");
     }
-    
+
     if (!mini_crt_io_init()) {
         crt_fatal_error("IO initialize failed");
     }
-    
+
     ret = main(argc, argv);
     exit(ret);
 }

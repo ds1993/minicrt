@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
         fwrite(v[i], 1, len, fp);
     }
     fclose(fp);
-    
+
     fp = fopen("test.txt", "r");
     for (i = 0; i < argc; ++i) {
         int len;

@@ -6,7 +6,7 @@ typedef struct _heap_header
         HEAP_BLOCK_FREE = 0xABABABAB,
         HEAP_BLOCK_USED = 0xCDCDCDCD,
     } type;
-    
+
     unsigned size;
     struct _heap_header* next;
     struct _heap_header* prev;
@@ -23,7 +23,7 @@ void free(void* ptr)
     if (header->type != HEAP_BLOCK_USED) {
         return;
     }
-    
+
     header->type = HEAP_BLOCK_FREE;
     if (header->prev != NULL && header->prev->type == HEAP_BLOCK_FREE) {
         header->prev->next = header->next;
@@ -34,7 +34,7 @@ void free(void* ptr)
         
         header = header->prev;
     }
-    
+
     if (header->next != NULL && header->next->type == HEAP_BLOCK_FREE) {
         header->size += header->next->size;
         header->next = header->next->next;
@@ -44,18 +44,18 @@ void free(void* ptr)
 void* malloc(unsigned size)
 {
     heap_header *header;
-    
+
     if (size == 0) {
         return NULL;
     }
-    
+
     header = list_head;
     while (header != 0) {
         if (header->type == HEAP_BLOCK_USED) {
             header = header->next;
             continue;
         }
-        
+
         if ((header->size > size + HEADER_SIZE) && (header->size <= size + HEADER_SIZE * 2)) {
             header->type = HEAP_BLOCK_USED;
         }
@@ -71,7 +71,7 @@ void* malloc(unsigned size)
         }
         header = header->next;
     }
-    
+
     return NULL;
 }
 

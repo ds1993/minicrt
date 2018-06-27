@@ -73,7 +73,7 @@ FILE* fopen(const char* filename, const char* mode)
     int fd = -1;
     int flags = 0;
     int access = 00700;
-    
+
 #define O_RDONLY    00
 #define O_WRONLY    01
 #define O_RDWR      02
@@ -84,19 +84,19 @@ FILE* fopen(const char* filename, const char* mode)
     if (strcmp(mode, "w") == 0) {
         flags |= O_WRONLY | O_CREAT | O_TRUNC;
     }
-    
+
     if (strcmp(mode, "w+") == 0) {
         flags |= O_RDWR | O_CREAT | O_TRUNC;
     }
-    
+
     if (strcmp(mode, "r") == 0) {
         flags |= O_RDONLY;
     }
-    
+
     if (strcmp(mode, "r+") == 0) {
         flags |= O_RDWR | O_CREAT;
     }
-    
+
     fd = open(filename, flags, access);
     return (FILE*)fd;
 }
